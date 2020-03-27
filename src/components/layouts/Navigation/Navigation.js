@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'gatsby';
 import styled from '@emotion/styled';
 
 import { MobileMenu } from './MobileMenu';
 import NoStyleLink from '../../Links/NoStyleLink';
 import { BurgerSVG3 } from './Burger3';
+import { getCurrentUser } from '../../../utils/auth';
+import { Signout } from '../../reusableStyles/auth/signout/Signout';
 
 const Header = styled.header`
   position: relative;
@@ -27,6 +29,7 @@ const LogoLink = styled(Link)`
   margin: 0;
 `;
 const Logo = styled.span`
+  padding: 0 1rem;
   z-index: 100;
   & ${LogoLink} {
     text-decoration: none !important;
@@ -37,14 +40,33 @@ const Logo = styled.span`
   }
 `;
 
+const AuthContainer = styled.div`
+  display: flex;
+
+  align-items: center;
+
+  font-size: 1.4rem;
+  & .user {
+    opacity: 0.8;
+    margin-right: 1rem;
+  }
+  & .logout {
+    opacity: 0.9;
+  }
+`;
+
 const MenuLinks = styled.div`
   display: flex;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 1.5rem;
-  align-items: center;
   @media (max-width: ${props => props.theme.screenSize.mobileL}) {
     display: none;
+  }
+`;
+
+const SigninLink = styled(NoStyleLink)`
+  font-size: 1.5rem;
+  color: inherit;
+  &:hover {
+    text-decoration: underline;
   }
 `;
 
@@ -53,7 +75,7 @@ const CustomLink = styled(NoStyleLink)`
   display: inline;
   position: relative;
 
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: ${props => props.theme.colors.white};
   margin: 1rem;
   &::before {
@@ -94,6 +116,12 @@ const BurgerIconContainer = styled.div`
 `;
 
 export const Navigation = () => {
+  const [username, setUsername] = useState(null);
+
+  useEffect(() => {
+    console.log('Nav is run', username);
+    setUsername(getCurrentUser().username);
+  }, [username]);
   const [mobileMenuOpen, setMobileMenu] = useState(false);
 
   const mobileMenuHandler = () => {
@@ -106,6 +134,17 @@ export const Navigation = () => {
         <HeaderTop>
           <Logo>
             <LogoLink to="/">AWS GATSBY STATER</LogoLink>
+            <AuthContainer>
+              <div className="user">
+                Hello,{' '}
+                {username || <SigninLink to="/app"> Sign in </SigninLink>}
+              </div>
+              {username && (
+                <div className="logout">
+                  <Signout />
+                </div>
+              )}
+            </AuthContainer>
           </Logo>
 
           <MenuLinks>

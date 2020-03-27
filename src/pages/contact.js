@@ -15,7 +15,7 @@ export const query = graphql`
   }
 `;
 
-const BlogPage = () => {
+const ContactPage = () => {
   return (
     <Layout>
       <SEO
@@ -23,9 +23,9 @@ const BlogPage = () => {
         description="Your Gatsby Opinionated AWS Starter Template"
       />
 
-      <Section>This is the blog page | Coming Soon</Section>
+      <Section>This is the contact page | coming Soon</Section>
     </Layout>
   );
 };
 
-export default BlogPage;
+export default ContactPage;

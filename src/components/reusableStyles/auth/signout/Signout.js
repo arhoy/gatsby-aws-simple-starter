@@ -6,9 +6,9 @@ import { navigate } from '@reach/router';
 const Button = styled.button`
   outline: none;
   border: none;
-  padding: 6px 8px;
+  padding: 3px 5px;
   cursor: pointer;
-  background: ${props => props.theme.colors.lightgrey};
+  background: ${props => props.theme.colors.white};
   border-radius: 3px;
   &:hover {
     background: ${props => props.theme.colors.primaryLight};

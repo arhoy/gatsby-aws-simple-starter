@@ -75,19 +75,11 @@
 				"Parameters": {
 					"identityPoolName": "cognito704b3e59_identitypool_704b3e59",
 					"allowUnauthenticatedIdentities": false,
-					"thirdPartyAuth": false,
-					"lambdaLogPolicy": "cognito704b3e59_lambda_log_policy",
-					"openIdLambdaRoleName": "cognito704b3e59_openid_lambda_role",
-					"openIdRolePolicy": "cognito704b3e59_openid_pass_role_policy",
-					"openIdLambdaIAMPolicy": "cognito704b3e59_openid_lambda_iam_policy",
-					"openIdLogPolicy": "cognito704b3e59_openid_lambda_log_policy",
+					"resourceNameTruncated": "cognite25de4a6",
 					"userPoolName": "cognito704b3e59_userpool_704b3e59",
 					"autoVerifiedAttributes": "email",
 					"mfaConfiguration": "OFF",
 					"mfaTypes": "SMS Text Message",
-					"roleName": "cognito704b3e59_sns-role",
-					"roleExternalId": "cognito704b3e59_role_external_id",
-					"policyName": "cognito704b3e59-sns-policy",
 					"smsAuthenticationMessage": "Your authentication code is {####}",
 					"smsVerificationMessage": "Your verification code is {####}",
 					"emailVerificationSubject": "Your verification code",
@@ -96,27 +88,17 @@
 					"passwordPolicyMinLength": 8,
 					"passwordPolicyCharacters": "Requires Lowercase,Requires Uppercase,Requires Numbers,Requires Symbols",
 					"requiredAttributes": "email",
-					"userpoolClientName": "cognito704b3e59_app_client",
 					"userpoolClientGenerateSecret": true,
 					"userpoolClientRefreshTokenValidity": 30,
+					"userpoolClientWriteAttributes": "email",
 					"userpoolClientReadAttributes": "email",
-					"mfaLambdaRole": "cognito704b3e59_totp_lambda_role",
-					"mfaLambdaLogPolicy": "cognito704b3e59_totp_lambda_log_policy",
-					"mfaPassRolePolicy": "cognito704b3e59_totp_pass_role_policy",
-					"mfaLambdaIAMPolicy": "cognito704b3e59_totp_lambda_iam_policy",
 					"userpoolClientLambdaRole": "cognito704b3e59_userpoolclient_lambda_role",
-					"userpoolClientLogPolicy": "cognito704b3e59_userpoolclient_lambda_log_policy",
-					"userpoolClientLambdaPolicy": "cognito704b3e59_userpoolclient_lambda_iam_policy",
 					"userpoolClientSetAttributes": false,
-					"useDefault": "default",
+					"thirdPartyAuth": true,
+					"roleExternalId": "cognito704b3e59_role_external_id",
+					"useDefault": "manual",
 					"resourceName": "cognito704b3e59",
 					"authSelections": "identityPoolAndUserPool",
-					"authRoleName": {
-						"Ref": "AuthRoleName"
-					},
-					"unauthRoleName": {
-						"Ref": "UnauthRoleName"
-					},
 					"authRoleArn": {
 						"Fn::GetAtt": [
 							"AuthRole",
@@ -127,6 +109,63 @@
 						"Fn::GetAtt": [
 							"UnauthRole",
 							"Arn"
+						]
+					},
+					"authProviders": "",
+					"userPoolGroups": true,
+					"adminQueries": true,
+					"triggers": "{}",
+					"hostedUI": false,
+					"userPoolGroupList": "admin,developer,user",
+					"adminQueryGroup": "admin",
+					"parentStack": {
+						"Ref": "AWS::StackId"
+					},
+					"permissions": "",
+					"dependsOn": "",
+					"env": "fun"
+				}
+			}
+		},
+		"authuserPoolGroups": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/amplify-my-aws-project-fun-165729-deployment/amplify-cfn-templates/auth/template.json",
+				"Parameters": {
+					"AuthRoleArn": {
+						"Fn::GetAtt": [
+							"AuthRole",
+							"Arn"
+						]
+					},
+					"UnauthRoleArn": {
+						"Fn::GetAtt": [
+							"UnauthRole",
+							"Arn"
+						]
+					},
+					"authcognito704b3e59UserPoolId": {
+						"Fn::GetAtt": [
+							"authcognito704b3e59",
+							"Outputs.UserPoolId"
+						]
+					},
+					"authcognito704b3e59AppClientIDWeb": {
+						"Fn::GetAtt": [
+							"authcognito704b3e59",
+							"Outputs.AppClientIDWeb"
+						]
+					},
+					"authcognito704b3e59AppClientID": {
+						"Fn::GetAtt": [
+							"authcognito704b3e59",
+							"Outputs.AppClientID"
+						]
+					},
+					"authcognito704b3e59IdentityPoolId": {
+						"Fn::GetAtt": [
+							"authcognito704b3e59",
+							"Outputs.IdentityPoolId"
 						]
 					},
 					"env": "fun"
@@ -150,6 +189,54 @@
 					},
 					"S3DeploymentBucket": "amplify-my-aws-project-fun-165729-deployment",
 					"S3DeploymentRootKey": "amplify-appsync-files/4bb4bd082c90c4b36cebf32dcb5e0cb5d99a466d",
+					"env": "fun"
+				}
+			}
+		},
+		"apiAdminQueries": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/amplify-my-aws-project-fun-165729-deployment/amplify-cfn-templates/api/admin-queries-cloudformation-template.json",
+				"Parameters": {
+					"authRoleName": {
+						"Ref": "AuthRoleName"
+					},
+					"unauthRoleName": {
+						"Ref": "UnauthRoleName"
+					},
+					"authcognito704b3e59UserPoolId": {
+						"Fn::GetAtt": [
+							"authcognito704b3e59",
+							"Outputs.UserPoolId"
+						]
+					},
+					"functionAdminQueriesb081e4d1Arn": {
+						"Fn::GetAtt": [
+							"functionAdminQueriesb081e4d1",
+							"Outputs.Arn"
+						]
+					},
+					"functionAdminQueriesb081e4d1Name": {
+						"Fn::GetAtt": [
+							"functionAdminQueriesb081e4d1",
+							"Outputs.Name"
+						]
+					},
+					"env": "fun"
+				}
+			}
+		},
+		"functionAdminQueriesb081e4d1": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/amplify-my-aws-project-fun-165729-deployment/amplify-cfn-templates/function/AdminQueriesb081e4d1-cloudformation-template.json",
+				"Parameters": {
+					"authcognito704b3e59UserPoolId": {
+						"Fn::GetAtt": [
+							"authcognito704b3e59",
+							"Outputs.UserPoolId"
+						]
+					},
 					"env": "fun"
 				}
 			}

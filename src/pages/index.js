@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link } from 'gatsby';
+
 import { graphql } from 'gatsby';
 
 import Layout from '../components/layouts/Layout';
-import { Section } from '../components/reusableStyles/sections/Sections';
-
 import SEO from '../hooks/SEO';
+import { Section0 } from '../components/_index/Section0/Section0';
+
 export const query = graphql`
   {
     seo: file(relativePath: { eq: "seo/contact.png" }) {
@@ -31,14 +31,7 @@ const IndexPage = () => (
       title="Gatsby Starter AWS | Your Blurb"
       description="Your Gatsby Opinionated AWS Starter Template"
     />
-
-    <Section>
-      <p>
-        Welcome! View Your Admin Dashboard <Link to="/app">here</Link>
-      </p>
-      <Link to="/app"></Link>
-      <Link to="/app/profile">Your profile</Link>
-    </Section>
+    <Section0 />
   </Layout>
 );
 
