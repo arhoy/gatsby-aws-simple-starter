@@ -1,22 +1,30 @@
-import React from "react"
-import { Router } from "@reach/router"
-import Layout from "../components/layout"
-import Details from "../components/Details"
-import Home from "../components/Home"
-import Login from "../components/Login"
-import SignUp from "../components/SignUp"
-import PrivateRoute from "../components/PrivateRoute"
+import React from 'react';
+import { Router } from '@reach/router';
+import Amplify from 'aws-amplify';
+import { withAuthenticator } from 'aws-amplify-react';
 
+import config from '../aws-exports';
+import Layout from '../components/layouts/Layout';
+import { AppNav } from '../components/_app/AppNav/AppNav';
+import PrivateRoute from '../components/PrivateRoute';
 
-const App = () => (
+import Details from '../components/Details';
+import Login from '../components/_app/_signin/Login';
+import { SignUp } from '../components/_app/_signup/SignUp';
+import { Dashboard } from '../components/_app/_dashboard/Dashboard';
+
+Amplify.configure(config);
+
+const App = props => (
   <Layout>
+    <AppNav />
     <Router>
-      <PrivateRoute path="/app/home" component={Home} />
-      <PrivateRoute path="/app/profile" component={Details} />
-      <Login path="/app/login" />
-      <SignUp path="/app/signup" />
+      <PrivateRoute exact path="/app/profile" component={Details} />
+      <PrivateRoute exact path="/app" component={Dashboard} />
+      <Login exact path="/app/login" />
+      <SignUp exact path="/app/signup" />
     </Router>
   </Layout>
-)
+);
 
-export default App
+export default withAuthenticator(App);

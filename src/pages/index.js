@@ -1,21 +1,45 @@
-import React from 'react'
-import { Link } from 'gatsby'
+import React from 'react';
+import { Link } from 'gatsby';
+import { graphql } from 'gatsby';
 
-import Layout from '../components/layout'
+import Layout from '../components/layouts/Layout';
+import { Section } from '../components/reusableStyles/sections/Sections';
 
-import Amplify from 'aws-amplify'
-import config from '../aws-exports'
-Amplify.configure(config)
+import SEO from '../hooks/SEO';
+export const query = graphql`
+  {
+    seo: file(relativePath: { eq: "seo/contact.png" }) {
+      childImageSharp {
+        fluid(quality: 100, maxWidth: 1000) {
+          src
+        }
+      }
+    }
 
+    hero: file(relativePath: { eq: "_contact/ghost.png" }) {
+      childImageSharp {
+        fluid(quality: 100, maxWidth: 2000) {
+          ...GatsbyImageSharpFluid_withWebp
+        }
+      }
+    }
+  }
+`;
 const IndexPage = () => (
   <Layout>
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site with multi-user authentication powered by <a href="https://amplify.aws">AWS Amplify</a></p>
-    <p>Create a new account: <Link to="/app/signup">Sign Up</Link></p>
-    <Link to="/app/login">Sign In</Link><br />
-    <Link to="/app/home">Home</Link><br />
-    <Link to="/app/profile">Your profile</Link>
-  </Layout>
-)
+    <SEO
+      title="Gatsby Starter AWS | Your Blurb"
+      description="Your Gatsby Opinionated AWS Starter Template"
+    />
 
-export default IndexPage
+    <Section>
+      <p>
+        Welcome! View Your Admin Dashboard <Link to="/app">here</Link>
+      </p>
+      <Link to="/app"></Link>
+      <Link to="/app/profile">Your profile</Link>
+    </Section>
+  </Layout>
+);
+
+export default IndexPage;

@@ -1,8 +1,26 @@
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`,
+});
+
+// Define site URL here
+let URL;
+if (process.env.NODE_ENV === 'production') {
+  URL = 'https://zeitlify.netlify.com';
+} else {
+  URL = 'http://localhost:8000';
+}
+
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: 'AWS STARTER TEMPLATE',
+    titleTemplate: 'AWS STARTER TEMPLATE YAY',
+    description:
+      'An opinionated Starter Template using AWS for quick full stack deployment',
+    author: 'Alex Quasar',
+    twitterUsername: '@_aquasar',
+    image: '/default.png',
+    url: URL,
+    siteUrl: URL,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -13,6 +31,7 @@ module.exports = {
         path: `${__dirname}/src/images`,
       },
     },
+
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
@@ -27,8 +46,25 @@ module.exports = {
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
       },
     },
+    {
+      resolve: `gatsby-plugin-emotion`,
+    },
+    {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [`Poppins\:100,300,500,700`, `Helvetica\:100,300,500,700`],
+        display: 'swap',
+      },
+    },
+    `gatsby-plugin-sass`,
+    {
+      resolve: `gatsby-source-instagram`,
+      options: {
+        username: `gatsbyjs`,
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
   ],
-}
+};
