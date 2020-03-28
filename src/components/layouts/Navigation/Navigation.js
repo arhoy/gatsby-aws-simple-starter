@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'gatsby';
 import styled from '@emotion/styled';
 
 import { MobileMenu } from './MobileMenu';
 import NoStyleLink from '../../Links/NoStyleLink';
 import { BurgerSVG3 } from './Burger3';
-import { getCurrentUser } from '../../../utils/auth';
+
 import { Signout } from '../../reusableStyles/auth/signout/Signout';
+import { UserContext } from '../../../context/user-context';
 
 const Header = styled.header`
   position: relative;
@@ -116,12 +117,10 @@ const BurgerIconContainer = styled.div`
 `;
 
 export const Navigation = () => {
-  const [username, setUsername] = useState(null);
+  const user = useContext(UserContext);
 
-  useEffect(() => {
-    console.log('Nav is run', username);
-    setUsername(getCurrentUser().username);
-  }, [username]);
+  const { username } = user;
+
   const [mobileMenuOpen, setMobileMenu] = useState(false);
 
   const mobileMenuHandler = () => {

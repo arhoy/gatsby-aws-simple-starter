@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 import { Section, Container1200 } from '../../reusableStyles/sections/Sections';
-import { getCurrentUser } from '../../../utils/auth';
+import { UserContext } from '../../../context/user-context';
 
 const Header = styled.div`
   background: ${props => props.theme.colors.lightgrey};
@@ -16,13 +16,17 @@ const Header = styled.div`
 `;
 
 export const Dashboard = () => {
-  const user = getCurrentUser();
+  const user = useContext(UserContext);
+
+  const { username } = user;
+
   return (
     <>
       <Header>
         <p>
-          Hello <span>{user.username}</span>! This is your Dashboard
+          Hello <span>{username}</span>! This is your Dashboard
         </p>
+        <p> {}</p>
       </Header>
       <Section>
         <Container1200></Container1200>

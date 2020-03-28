@@ -8,12 +8,15 @@ import PropTypes from 'prop-types';
 import { Navigation } from './Navigation/Navigation';
 import { Footer } from './Footer/Footer';
 
+import { UserContext } from '../../context/user-context';
+
 // // React Slick CSS
 // import 'slick-carousel/slick/slick.css';
 // import 'slick-carousel/slick/slick-theme.css';
 
 // base and global styles
 import '../../scss/main.scss';
+import { getCurrentUser } from '../../utils/auth';
 
 const theme = {
   colors: {
@@ -107,11 +110,12 @@ const FullFooterLayout = styled.footer`
 `;
 
 const Layout = ({ children, full, backgroundLayer }) => {
+  const user = getCurrentUser();
   const white = '#fff';
   const primaryColor = 'rgb(92, 52, 145)';
 
   return (
-    <>
+    <UserContext.Provider value={user}>
       <Global
         styles={css`
           * {
@@ -165,7 +169,7 @@ const Layout = ({ children, full, backgroundLayer }) => {
           </DivFixed>
         </ThemeProvider>
       )}
-    </>
+    </UserContext.Provider>
   );
 };
 Layout.propTypes = {
